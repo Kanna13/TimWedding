@@ -1,0 +1,2 @@
+.form-success.form-error{color:var(--red)}
+.submit.is-loading{opacity:.65;pointer-events:none}
