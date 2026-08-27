@@ -3,6 +3,8 @@ function json(res, status, body) {
   return res.end(JSON.stringify(body));
 }
 
+const stats = { attending: 0, declined: 0, guests: 0 };
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return json(res, 405, { ok: false, message: 'Метод не поддерживается.' });
   const botToken = String(process.env.TELEGRAM_BOT_TOKEN || '').replace(/\s+/g, '');
@@ -13,6 +15,15 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
+    const telegramCommand = body.message && String(body.message.text || '').trim().toLowerCase();
+    if (telegramCommand === '/stat' || telegramCommand === '/stats') {
+      const statMessage = `📊 СТАТИСТИКА RSVP\n\n✅ Придут: ${stats.attending}\n❌ Не придут: ${stats.declined}\n👥 Всего гостей: ${stats.guests}`;
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: statMessage })
+      });
+      return json(res, 200, { ok: true });
+    }
     const name = String(body.name || '').trim();
     const answerRaw = String(body.answer || '').trim();
     const guests = Math.max(1, Math.min(20, Number.parseInt(body.guests, 10) || 1));
@@ -38,6 +49,9 @@ module.exports = async function handler(req, res) {
       console.error('Telegram API error', tg.status, telegramBody);
       throw new Error(`Telegram request failed (${tg.status})`);
     }
+    if (answer === 'Придёт') stats.attending += 1;
+    else stats.declined += 1;
+    stats.guests += guests;
     return json(res, 200, { ok: true });
   } catch (error) {
     console.error('RSVP error', error);
