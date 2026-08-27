@@ -1,0 +1,6 @@
+/* Keep large photo sections light during scrolling */
+.paper-card,.story-card,.venue-photo,.gallery-grid img{will-change:auto!important}
+.hero-original-photo img,.story-card img,.venue-photo img,.gallery-grid img{transform:translateZ(0);backface-visibility:hidden}
+@media(prefers-reduced-motion: no-preference){
+  .reveal{transition-duration:.65s}
+}
