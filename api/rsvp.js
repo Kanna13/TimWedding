@@ -5,7 +5,7 @@ function json(res, status, body) {
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return json(res, 405, { ok: false, message: 'Метод не поддерживается.' });
-  const botToken = String(process.env.TELEGRAM_BOT_TOKEN || '').trim();
+  const botToken = String(process.env.TELEGRAM_BOT_TOKEN || '').replace(/\s+/g, '');
   const chatId = String(process.env.TELEGRAM_CHAT_ID || '').trim();
   if (!botToken || !chatId || !/^\d+:[A-Za-z0-9_-]+$/.test(botToken)) {
     return json(res, 500, { ok: false, message: 'Сервис временно недоступен. Попробуйте позже.' });
