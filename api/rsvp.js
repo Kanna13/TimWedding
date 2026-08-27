@@ -1,5 +1,3 @@
-const { kv } = require('@vercel/kv');
-
 function json(res, status, body) {
   res.status(status).setHeader('Content-Type', 'application/json');
   return res.end(JSON.stringify(body));
@@ -21,26 +19,13 @@ module.exports = async function handler(req, res) {
 
     const answer = /не смогу|не прид|нет/i.test(answerRaw) ? 'Не придёт' : 'Придёт';
     const date = new Intl.DateTimeFormat('ru-RU', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Bishkek' }).format(new Date());
-    const record = { name, answer, guests, note, createdAt: new Date().toISOString() };
-
-    await kv.lpush('wedding:rsvp:responses', JSON.stringify(record));
-    await kv.incr(answer === 'Придёт' ? 'wedding:rsvp:willCome' : 'wedding:rsvp:wontCome');
-    await kv.incrby('wedding:rsvp:guests', guests);
-    const [willCome, wontCome, totalGuests] = await Promise.all([
-      kv.get('wedding:rsvp:willCome'), kv.get('wedding:rsvp:wontCome'), kv.get('wedding:rsvp:guests')
-    ]);
-
     const message = [
       '💌 <b>НОВЫЙ ОТВЕТ НА СВАДЬБУ</b>', '',
       `👤 Имя: ${escapeHtml(name)}`,
       `💍 Ответ: ${answer}`,
       `👥 Гостей: ${guests}`,
       `💬 Комментарий: ${escapeHtml(note || '—')}`, '',
-      `📅 Дата ответа: ${date}`, '',
-      '📊 <b>СТАТИСТИКА</b>',
-      `✅ Придут: ${Number(willCome) || 0}`,
-      `❌ Не придут: ${Number(wontCome) || 0}`,
-      `👥 Всего гостей: ${Number(totalGuests) || 0}`
+      `📅 Дата ответа: ${date}`
     ].join('\n');
     const tg = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
