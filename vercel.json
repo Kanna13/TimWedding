@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/rsvp.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
