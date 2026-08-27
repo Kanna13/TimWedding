@@ -1,0 +1,1 @@
+.paper-details:before{content:'love & trust';display:block;color:var(--red);font:italic 36px/1 var(--serif);letter-spacing:-.04em;margin:0 0 26px;text-align:center}.paper-details:after{content:'KASIET  ·  TEMIRLAN';display:block;margin-top:22px;text-align:center;color:#958675;font:9px var(--mono);letter-spacing:.2em}@media(max-width:700px){.paper-details:before{font-size:30px}}

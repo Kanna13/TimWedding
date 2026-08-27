@@ -1,0 +1,10 @@
+.story-card{position:relative}
+.story-card figcaption{position:relative}
+.story-card figcaption{padding-top:88px!important}
+.story-card figcaption b{font-size:28px!important;color:var(--red)!important;font-style:italic;letter-spacing:-.03em}
+.story-card figcaption small{font-size:12px!important}
+.story-card figcaption:before{content:'';display:block;position:absolute;z-index:10;left:42px;top:4px;width:92px;height:44px;border-bottom:3px dashed var(--red);border-left:3px dashed var(--red);border-radius:0 0 0 36px;transform:rotate(-18deg);opacity:.95;pointer-events:none}
+.story-card figcaption:after{display:none!important}
+.story-card.offset figcaption:before{left:auto;right:28px;transform:scaleX(-1) rotate(-18deg)}
+.story-card.offset figcaption:after{left:auto;right:88px;transform:scaleX(-1) rotate(-28deg)}
+@media(max-width:700px){.story-card figcaption{padding-top:68px!important}.story-card figcaption b{font-size:24px!important}.story-card figcaption small{font-size:11px!important}.story-card figcaption:before{top:3px;left:25px;width:52px;height:30px}.story-card.offset figcaption:before{right:20px}}

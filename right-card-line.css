@@ -1,0 +1,13 @@
+/* Editorial divider between the quote and the photo pair */
+.paper-details h3:after{
+  padding-left:12px;
+  padding-right:8px;
+}
+.paper-details .paper-photo-wide{
+  margin-top:34px!important;
+  padding-top:26px;
+  border-top:1px solid rgba(126,48,48,.58);
+}
+@media(max-width:700px){
+  .paper-details .paper-photo-wide{margin-top:26px!important;padding-top:20px}
+}

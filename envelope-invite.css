@@ -1,0 +1,12 @@
+.story-card figcaption span{display:none!important}
+.story-card figcaption{grid-template-columns:1fr!important}.story-card figcaption b,.story-card figcaption small{grid-column:1!important}
+.story-card figcaption small{font-size:14px!important;color:#272522!important;letter-spacing:.01em}
+.envelope-invite{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center;background:#efe7dd;overflow:hidden}
+.envelope-copy h2{margin:0 0 28px;font-size:clamp(52px,6vw,84px)}
+.envelope-copy>p:last-of-type{max-width:330px;font:20px/1.45 var(--serif);color:#62594f;margin:0 0 38px}
+.envelope-button{display:inline-flex;gap:38px;align-items:center;border-bottom:1px solid var(--red);padding:12px 0;color:var(--red);text-decoration:none;font:11px var(--mono);text-transform:uppercase;letter-spacing:.1em}.envelope-button span{font-size:18px}
+.envelope-art{position:relative;width:min(38vw,460px);aspect-ratio:1.35;margin:auto;background:#e5d0c4;box-shadow:20px 24px 0 rgba(125,46,47,.14);transform:rotate(3deg)}
+.envelope-art:before,.envelope-art:after{content:'';position:absolute;inset:0;border:1px solid rgba(125,46,47,.38)}.envelope-art:after{inset:15px;transform:rotate(-6deg)}
+.envelope-paper{position:absolute;z-index:2;left:12%;top:12%;width:76%;height:72%;background:#fbf7f0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;box-shadow:0 10px 25px rgba(54,38,27,.12)}
+.envelope-paper span,.envelope-paper small{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#8a776a}.envelope-paper b{font:500 clamp(36px,4vw,56px) var(--serif);letter-spacing:-.08em;color:var(--red)}.envelope-paper i{font-style:italic;color:#272522}.envelope-seal{position:absolute;z-index:4;bottom:5%;left:50%;transform:translateX(-50%);width:66px;height:66px;border-radius:50%;background:var(--red);color:#f8efe7;display:grid;place-items:center;font:21px var(--serif);box-shadow:0 4px 0 rgba(60,25,25,.18)}.envelope-seal span{font-style:italic;color:#f1c9bd}
+@media(max-width:700px){.envelope-invite{display:block}.envelope-copy{margin-bottom:60px}.envelope-art{width:88vw}.envelope-copy h2{font-size:58px}}

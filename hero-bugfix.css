@@ -1,0 +1,2 @@
+/* hero must render immediately even when page opens on an anchor */
+.hero-collage.reveal{opacity:1;transform:none}.hero-collage:before,.hero-collage:after{display:none!important}.hero-collage>.hero-image.hero-image-back{display:none!important}.hero-collage>.hero-image:nth-child(2),.hero-collage>.hero-image-float{opacity:1;visibility:visible}
