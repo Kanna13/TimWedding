@@ -31,7 +31,11 @@ module.exports = async function handler(req, res) {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: process.env.TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
     });
-    if (!tg.ok) throw new Error('Telegram request failed');
+    const telegramBody = await tg.text();
+    if (!tg.ok) {
+      console.error('Telegram API error', tg.status, telegramBody);
+      throw new Error(`Telegram request failed (${tg.status})`);
+    }
     return json(res, 200, { ok: true });
   } catch (error) {
     console.error('RSVP error', error);
