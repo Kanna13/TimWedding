@@ -5,7 +5,9 @@ function json(res, status, body) {
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return json(res, 405, { ok: false, message: 'Метод не поддерживается.' });
-  if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
+  const botToken = String(process.env.TELEGRAM_BOT_TOKEN || '').trim();
+  const chatId = String(process.env.TELEGRAM_CHAT_ID || '').trim();
+  if (!botToken || !chatId || !/^\d+:[A-Za-z0-9_-]+$/.test(botToken)) {
     return json(res, 500, { ok: false, message: 'Сервис временно недоступен. Попробуйте позже.' });
   }
 
@@ -20,16 +22,16 @@ module.exports = async function handler(req, res) {
     const answer = /не смогу|не прид|нет/i.test(answerRaw) ? 'Не придёт' : 'Придёт';
     const date = new Intl.DateTimeFormat('ru-RU', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Bishkek' }).format(new Date());
     const message = [
-      '💌 <b>НОВЫЙ ОТВЕТ НА СВАДЬБУ</b>', '',
+      '💌 НОВЫЙ ОТВЕТ НА СВАДЬБУ', '',
       `👤 Имя: ${escapeHtml(name)}`,
       `💍 Ответ: ${answer}`,
       `👥 Гостей: ${guests}`,
       `💬 Комментарий: ${escapeHtml(note || '—')}`, '',
       `📅 Дата ответа: ${date}`
     ].join('\n');
-    const tg = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    const tg = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: process.env.TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+      body: JSON.stringify({ chat_id: chatId, text: message })
     });
     const telegramBody = await tg.text();
     if (!tg.ok) {
